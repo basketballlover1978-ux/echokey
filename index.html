@@ -65,20 +65,14 @@ details:not([open]) .when-open { display: none; }
     </style>
 </head>
 <body onclick="initAudio()">
-<details style="background: #111; color: #a3e0ff; font-family: sans-serif; cursor: pointer; border-bottom: 1px solid #222;">
-  <summary style="padding: 15px; font-weight: bold; outline: none; list-style: none;">
-  <span class="when-closed">❓ HOW TO PLAY (Click to expand)</span>
-<span class="when-open">📖 GAME INSTRUCTIONS (Click to minimize)</span>
-  </summary>
-  <div style="padding: 0 20px 20px 20px; font-size: 0.9rem; line-height: 1.4;">
-    <p>This is a <strong>Memory Game</strong>. Here is the logic:</p>
-    <ol>
-      <li>Watch the sequence as the keys light up and play notes.</li>
-      <li>When it stops, it's your turn to <strong>echo</strong> the pattern.</li>
-      <li>Click the exact same keys in the same order to progress!</li>
-    </ol>
-  </div>
-</details>    
+<div id="instruction-banner" style="background: #111; color: #eee; font-family: sans-serif; border-bottom: 1px solid #222; display: flex; align-items: center; justify-content: space-between; padding: 10px 15px;">
+    <div id="instruction-content" style="font-size: 0.9rem; flex-grow: 1; color: #aaa;">
+       <span style="color: #fff; margin-right: 8px;">?</span> <strong>HOW TO PLAY:</strong> Watch the echo, then play it back!
+    </div>
+    <button id="toggle-instructions" onclick="toggleUIInstructions()" style="background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; cursor: pointer; padding: 4px 12px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">
+        Hide
+    </button>
+</div>
 
 <div id="exit-screen">Session Terminated</div>
 
@@ -249,6 +243,22 @@ details:not([open]) .when-open { display: none; }
             }
         }
     }
+function toggleUIInstructions() {
+    const content = document.getElementById('instruction-content');
+    const btn = document.getElementById('toggle-instructions');
+    const banner = document.getElementById('instruction-banner');
+    
+    if (content.style.display !== 'none') {
+        content.style.display = 'none';
+        btn.innerText = '? Instructions';
+        banner.style.justifyContent = 'flex-end'; 
+    } else {
+        content.style.display = 'block';
+        btn.innerText = 'Hide';
+        banner.style.justifyContent = 'space-between';
+    }
+}
+
 </script>
 </body>
 </html>
