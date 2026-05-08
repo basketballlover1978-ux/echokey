@@ -65,11 +65,17 @@ details:not([open]) .when-open { display: none; }
     </style>
 </head>
 <body onclick="initAudio()">
-<div id="instruction-banner" style="background: #111; color: #eee; font-family: sans-serif; border-bottom: 1px solid #222; display: flex; align-items: center; justify-content: space-between; padding: 10px 15px;">
-    <div id="instruction-content" style="font-size: 0.9rem; flex-grow: 1; color: #aaa;">
-       <span style="color: #fff; margin-right: 8px;">?</span> <strong>HOW TO PLAY:</strong> Watch the echo, then play it back!
+<div id="instruction-banner" style="background: #111; color: #eee; font-family: sans-serif; border-bottom: 1px solid #222; display: flex; align-items: flex-start; justify-content: space-between; padding: 15px;">
+    <div id="instruction-content" style="font-size: 0.9rem; line-height: 1.5; color: #aaa; max-width: 85%;">
+        <span style="color: #fff; font-weight: bold;">HOW TO PLAY:</span>
+        <ol style="margin: 10px 0; padding-left: 20px;">
+            <li>Watch the sequence as the keys light up and play notes.</li>
+            <li>When it stops, it's your turn to <strong>echo</strong> the pattern.</li>
+            <li>Click the exact same keys in the same order to progress!</li>
+        </ol>
+        <p style="font-size: 0.8rem; margin: 0; color: #777;">Tip: The patterns get longer as you level up.</p>
     </div>
-    <button id="toggle-instructions" onclick="toggleUIInstructions()" style="background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; cursor: pointer; padding: 4px 12px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">
+    <button id="toggle-instructions" onclick="toggleUIInstructions()" style="background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; cursor: pointer; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">
         Hide
     </button>
 </div>
@@ -250,7 +256,7 @@ function toggleUIInstructions() {
     
     if (content.style.display !== 'none') {
         content.style.display = 'none';
-        btn.innerText = '? Instructions';
+        btn.innerText = '?';
         banner.style.justifyContent = 'flex-end'; 
     } else {
         content.style.display = 'block';
