@@ -66,17 +66,18 @@ details:not([open]) .when-open { display: none; }
 </head>
 <body onclick="initAudio()">
 <div id="instruction-banner" style="background: #111; color: #eee; font-family: sans-serif; border-bottom: 1px solid #222; display: flex; align-items: flex-start; justify-content: space-between; padding: 15px;">
-    <div id="instruction-content" style="font-size: 0.9rem; line-height: 1.5; color: #aaa; max-width: 85%;">
-        <span style="color: #fff; font-weight: bold;">HOW TO PLAY:</span>
+ <div id="instruction-content" style="font-size: 0.9rem; line-height: 1.5; color: #aaa; max-width: 85%; display: none;">
+    <span id="instr-title" style="color: #fff; font-weight: bold;">HOW TO PLAY:</span>
+    <div id="instr-body">
         <ol style="margin: 10px 0; padding-left: 20px;">
             <li>Watch the sequence as the keys light up and play notes.</li>
             <li>When it stops, it's your turn to <strong>echo</strong> the pattern.</li>
             <li>Click the exact same keys in the same order to progress!</li>
         </ol>
-        <p style="font-size: 0.8rem; margin: 0; color: #777;">Tip: The patterns get longer as you level up.</p>
     </div>
+</div> 
     <button id="toggle-instructions" onclick="toggleUIInstructions()" style="background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; cursor: pointer; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">
-        Hide
+        ?
     </button>
 </div>
 
@@ -165,6 +166,7 @@ details:not([open]) .when-open { display: none; }
 
     function showMainMenu() {
         mode = 'menu';
+        updateInstructionMode();
         document.getElementById('start-menu').style.display = 'flex';
         document.getElementById('end-menu').style.display = 'none';
         document.getElementById('hud-content').style.display = 'none';
@@ -177,6 +179,7 @@ details:not([open]) .when-open { display: none; }
 
     async function freePlay() {
         await initAudio(); mode = 'free';
+        updateInstructionMode();
         document.getElementById('start-menu').style.display = 'none';
         document.getElementById('hud-content').style.display = 'flex';
         document.getElementById('exit-btn').style.display = 'block';
@@ -187,6 +190,7 @@ details:not([open]) .when-open { display: none; }
 
     async function startGame() {
         await initAudio(); mode = 'game';
+        updateInstructionMode();
         document.getElementById('start-menu').style.display = 'none';
         document.getElementById('end-menu').style.display = 'none';
         document.getElementById('hud-content').style.display = 'flex';
@@ -248,7 +252,30 @@ details:not([open]) .when-open { display: none; }
                 anim(i, false);
             }
         }
+    } 
+    function updateInstructionMode() {
+    const title = document.getElementById('instr-title');
+    const body = document.getElementById('instr-body');
+    
+    if (mode === 'free') {
+        title.innerText = "SOLO SESSION:";
+        body.innerHTML = `
+            <p style="margin: 10px 0; color: #a3e0ff;">
+                The floor is yours! All keys (including sharps) are active. 
+                Practice your coordination or just play for fun.
+            </p>
+        `;
+    } else {
+        title.innerText = "HOW TO PLAY:";
+        body.innerHTML = `
+            <ol style="margin: 10px 0; padding-left: 20px;">
+                <li>Watch the sequence light up and listen.</li>
+                <li>When it stops, echo the pattern exactly.</li>
+                <li>Patterns get longer every level!</li>
+            </ol>
+        `;
     }
+}
 function toggleUIInstructions() {
     const content = document.getElementById('instruction-content');
     const btn = document.getElementById('toggle-instructions');
